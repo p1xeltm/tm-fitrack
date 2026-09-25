@@ -341,9 +341,7 @@ async function loadFileList() {
 async function fetchAndParseSession(fileName) {
   if (fitCache[fileName]) return fitCache[fileName];
 
-  try {
-    const fetchResp = await fetch(`/archiv_fit/${encodeURIComponent(fileName)}`);
-    if (!fetchResp.ok) return null;
+  try {    const fetchResp = await fetch(`/archiv_fit/${encodeURIComponent(fileName)}`);    if (!fetchResp.ok) return null; 
 
     const arrayBuffer = await fetchResp.arrayBuffer();
     const bytes = new Uint8Array(arrayBuffer);

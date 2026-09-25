@@ -3,12 +3,12 @@ import json
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 PORT = 8000
-FIT_DIR = os.path.join(os.path.dirname(__file__), 'archiv_fit')
+FIT_DIR = '/home/tm/Laufwerk-T/GarminEdge130Plus-fit/'
 CSV_FILE = os.path.join(os.path.dirname(__file__), 'fitdb.csv')
 DELIMITER = "***"
 
 def update_csv_database():
-    """Prüft den archiv_fit Ordner und trägt neue .fit-Dateien mit Platzhaltern in die fitdb.csv ein."""
+    """Prüft den fit-Ordner und trägt neue .fit-Dateien mit Platzhaltern in die fitdb.csv ein."""
     existing_filenames = set()
     database_lines = []
 
@@ -65,6 +65,25 @@ class LocalFitServer(SimpleHTTPRequestHandler):
                 
             self.wfile.write(json.dumps(fit_files).encode('utf-8'))
             return
+
+        # Neu: Abfangen der Anfragen an /archiv_fit/ und Ausliefern aus FIT_DIR
+        if self.path.startswith('/archiv_fit/'):
+            from urllib.parse import unquote
+            # Dateinamen aus der URL extrahieren und decodieren
+            filename = unquote(self.path[len('/archiv_fit/'):])
+            file_path = os.path.join(FIT_DIR, filename)
+
+            if os.path.exists(file_path) and os.path.isfile(file_path):
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/octet-stream')
+                self.send_header('Content-Length', str(os.path.getsize(file_path)))
+                self.end_headers()
+                with open(file_path, 'rb') as f:
+                    self.wfile.write(f.read())
+                return
+            else:
+                self.send_error(404, "FIT-Datei nicht gefunden")
+                return
 
         return super().do_GET()
 
