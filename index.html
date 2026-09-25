@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>tm-connect</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔗</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+  <div class="container">
+    <!-- Obere Sektion (Liste & Steuerung) -->
+    <div class="top-panel">
+      <div class="card">
+        <ul id="fitFileList" class="file-list"></ul>
+        <div id="status" class="status">Bereit</div>
+      </div>
+    </div>
+
+    <!-- Horizontaler Resizer (Vertikale Trennung: Liste oben / Inhalt unten) -->
+    <div class="resizer" id="dragMeV"></div>
+
+    <!-- Untere Sektion (Geteilt in Karte und Höhenprofil) -->
+    <div class="bottom-container">
+      <!-- Karte (initial 60% Breite) -->
+      <div class="map-panel">
+        <div id="map"></div>
+      </div>
+
+      <!-- Vertikaler Resizer (Horizontale Trennung: Karte links / Profil rechts) -->
+      <div class="resizer-horizontal" id="dragMeH"></div>
+
+      <!-- Höhenprofil-Box (initial 40% Breite) -->
+      <div class="profile-panel">
+        <div class="card profile-card">
+          <h3>Höhenprofil</h3>
+          <div class="profile-placeholder">Höhenprofil folgt hier...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Eigene Logik -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>

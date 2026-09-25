@@ -1,0 +1,246 @@
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 15px; background: #f4f6f8; color: #333; }
+
+/* Layout-Container */
+.container { display: flex; flex-direction: column; gap: 0; height: calc(100vh - 30px); }
+
+.top-panel { 
+  flex: 0 0 45%; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 15px; 
+  min-height: 150px; 
+  overflow: hidden; 
+  padding-bottom: 4px; 
+}
+
+.bottom-container {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  min-height: 200px;
+  overflow: hidden;
+}
+
+.map-panel {
+  flex: 0 0 60%; 
+  background: #fff; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+  overflow: hidden; 
+  display: flex; 
+  flex-direction: column; 
+  min-width: 200px;
+}
+
+.profile-panel {
+  flex: 1; 
+  background: #fff; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+  overflow: hidden; 
+  display: flex; 
+  flex-direction: column; 
+  min-width: 200px;
+}
+
+.resizer {
+  height: 6px;
+  background: #308d7d;
+  cursor: row-resize;
+  border-radius: 3px;
+  margin: 5px 0;
+  transition: background 0.2s;
+}
+
+.resizer-horizontal {
+  width: 6px;
+  background: #308d7d;
+  cursor: col-resize;
+  border-radius: 3px;
+  margin: 0 5px;
+  transition: background 0.2s;
+}
+.resizer-horizontal:hover, .resizer-horizontal.active { background: #308d7d; }
+
+.card { 
+  background: transparent; 
+  padding: 15px 0; 
+  border-radius: 8px; 
+  box-shadow: none; 
+  flex: 1; 
+  display: flex; 
+  flex-direction: column; 
+  overflow: hidden; 
+}
+.card h3 { margin-top: 0; margin-bottom: 10px; font-size: 1.0em; color: #444; }
+
+.profile-card { background: #fff; }
+.profile-placeholder {
+  flex: 1;
+  background: #e9ecef;
+  border: 2px dashed #cbd5e1;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 0.95em;
+}
+
+/* Fester Tabellenkopf */
+.file-list-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: #308d7d !important;
+  color: #fff !important;
+  font-weight: normal;
+  display: grid;
+  grid-template-columns: 9% 6% 1fr auto 8% 8% 9% 8%;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 0.9em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  cursor: default !important;
+}
+
+
+/* Nur den Text im Tabellenkopf leicht einrücken, ohne die Spalte zu verschieben */
+.file-list-header > div:first-child {
+  padding-left: 0;
+  text-indent: 10px;
+}
+
+/* Rechte Ausrichtung für die Statistik-Überschriften (analog zu den Werten) */
+.header-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Tabellenkopf: Letzte Spalte rechts einrücken */
+.file-list-header > div:last-child {
+  padding-right: 10px;
+}
+
+/* Listeneinträge: Letzte Spalte rechts einrücken */
+ul.file-list li > div:last-child {
+  padding-right: 10px;
+}
+
+ul.file-list { 
+  list-style: none; 
+  padding: 0 !important; 
+  margin: 0 !important; 
+  flex: 1; 
+  overflow-y: auto; 
+  height: 100%;
+  border: none; 
+  background: #f4f6f8;
+}
+
+ul.file-list li { 
+  padding: 6px 0; 
+  border-bottom: 1px solid #eee; 
+  cursor: pointer; 
+  display: grid;
+  grid-template-columns: 7% 7% 1fr auto 8% 8% 9% 9%; 
+  gap: 10px;
+  align-items: center;
+  font-size: 0.9em; 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+ul.file-list li:hover { background: #e4e4e4; }
+
+ul.file-list li .edit-btn { opacity: 0; transition: opacity 0.2s ease; }
+ul.file-list li:hover .edit-btn { opacity: 1; }
+
+ul.file-list li.active { background: #dddddd; color: #308d7d; }
+ul.file-list li.active .activity-title { font-weight: bold; color: #308d7d; }
+ul.file-list li.active div:not(.bike-badge) { color: #308d7d !important; }
+ul.file-list li.active:hover .edit-btn { opacity: 1; }
+ul.file-list li.active .stat-cell { color: #308d7d !important; }
+
+.activity-title { 
+  font-size: 1.0em; 
+  font-weight: 600; 
+  color: #222; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  white-space: nowrap; 
+  font-family: inherit;
+  text-align: left;
+}
+
+.edit-btn { 
+  background: transparent; 
+  border: none; 
+  cursor: pointer; 
+  font-size: 0.9em; 
+  padding: 2px 4px; 
+  color: #888; 
+  border-radius: 2px;
+  font-family: inherit;
+  justify-self: start;
+}
+.edit-btn:hover { background: rgba(0, 0, 0, 0.05); color: #333; }
+ul.file-list li.active .edit-btn { color: rgba(255, 255, 255, 0.7); }
+ul.file-list li.active .edit-btn:hover { background: rgba(255, 255, 255, 0.2); color: white; }
+
+.name-input { width: 100%; font-size: 0.95em; padding: 2px 4px; border: 1px solid #308d7d; border-radius: 3px; outline: none; font-family: inherit; background: #fff; color: #333; }
+.bike-input { width: 100%; font-size: 0.95em; padding: 1px 3px; border: 1px solid #00659c; border-radius: 3px; outline: none; font-family: inherit; background: #fff; color: #333; text-align: right; }
+
+.activity-date {
+  text-align: left !important;
+  justify-self: start !important;
+  white-space: nowrap;
+  color: #666;
+  padding-left: 0;
+  text-indent: 10px;
+}
+
+.bike-badge {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left !important;
+  justify-self: start !important;
+  font-weight: normal; 
+  cursor: pointer; 
+  padding: 0;
+  margin: 0;
+}
+
+ul.file-list li:not(.active) .bike-badge.bike-exceed { color: #e0802f; }
+ul.file-list li:not(.active) .bike-badge.bike-terra { color: #17a2b8; }
+ul.file-list li:not(.active) .bike-badge.bike-slx99 { color: #1b6f8a; }
+ul.file-list li:not(.active) .bike-badge.bike-c62o { color: #444444; }
+ul.file-list li:not(.active) .bike-badge.bike-default { color: #666666; }
+
+/* Statistik-Zelle: Kompakt, sauber rechtsbündig (Wert + Einheit) */
+.stat-cell {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+  color: #555;
+  white-space: nowrap;
+}
+
+.stat-val {
+  text-align: right;
+}
+
+.stat-unit {
+  text-align: right;
+  font-size: 0.9em;
+  opacity: 0.45;
+}
+
+.status { font-size: 0.8em; color: #666; margin-top: 5px; }
+#map { width: 100%; height: 100%; z-index: 1; }
