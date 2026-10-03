@@ -4,15 +4,13 @@ pip3 install flask --break-system-packages
 
 
 -----------------------------------------------------------------------
-Grundfunktionen für v1.0
+Grundversion für v1.0
 -----------------------------------------------------------------------
-./ Einbettung OpenStreetMap, inklusive Höhenschummerung
-
+Einbettung OpenStreetMap, inklusive Höhenschummerung
+?? wenn script.js zu groß --> Aufteilen Auslagern von Funktinen oder Teilen?
 -----------------------------------------------------------------------
 Issues
 -----------------------------------------------------------------------
-zentrale Farbpalette
-#rad mit farblichen Bubbles/Pillen-Formen anstatt Text #exceed/#terra
 Einbettung Höhenprofil (zunächst als Platzhalter)
 (Funktion) Ändern der Trackfarbe, inkl. Transparenz+Farbe
 (Funktion) Mehrfachauswahl von Touren

@@ -34,12 +34,24 @@ function formZeit(sekunden) {
     return `${h}:${mStr}:${sStr}`;
 }
 
+// Hilfsfunktion: Ermittlung CSS-Klasse für jeweiliges Rad
+function getRadKlasse(radName) {
+    if (!radName) return '';
+    const name = radName.toLowerCase().trim();
+    
+    if (name.includes('exceed')) return 'rad-exceed';
+    if (name.includes('terra'))  return 'rad-terra';
+    if (name.includes('c62o'))   return 'rad-c62o';
+    if (name.includes('slx99'))  return 'rad-slx99';
+    
+    return '';
+}
+
 // Funktion: Aktualisieren von Datenbank-Feldern
 async function update_dbFeld(activityId, spalte, wert) {
     const aktivitaet = alleAktivitaeten.find(a => a.id === activityId);
     const alterWert = aktivitaet ? aktivitaet[spalte] : null;
 
-    // Lokalen Datenstand vorab anpassen
     if (aktivitaet) aktivitaet[spalte] = wert;
 
     try {
@@ -71,11 +83,12 @@ function rendereTabelle(liste) {
     liste.forEach(zeile => {
         const tr = document.createElement('tr');
         const istFav = Boolean(zeile.fav);
+        const radKlasse = getRadKlasse(zeile.rad);
         
         tr.innerHTML = `
             <td class="spalte-align-left">${formDatum(zeile.datum)}</td>
             <td class="spalte-align-left">${zeile.startzeit || ''}</td>
-            <td class="spalte-align-left edit-zelle" data-id="${zeile.id}" data-spalte="rad" contenteditable="false" spellcheck="false"><span class="edit-text">${zeile.rad || ''}</span><span class="icon-edit">»</span></td>
+            <td class="spalte-align-left edit-zelle ${radKlasse}" data-id="${zeile.id}" data-spalte="rad" contenteditable="false" spellcheck="false"><span class="edit-text">${zeile.rad || ''}</span><span class="icon-edit">»</span></td>
             <td class="spalte-align-left edit-zelle" data-id="${zeile.id}" data-spalte="titel" contenteditable="false" spellcheck="false"><span class="edit-text">${zeile.titel || ''}</span><span class="icon-edit">»</span></td>
             <td class="spalte-align-right">${formZahl(zeile.distanz)}</td>
             <td class="spalte-align-right">${zeile.anstieg ?? ''}</td>
@@ -108,8 +121,8 @@ fetch('/api/activities')
 
 // Event-Listener für Suchfeld
 document.getElementById('suche').addEventListener('input', function(e) {
+    
     const begriff = e.target.value.toLowerCase().trim();
-
     const gefiltert = alleAktivitaeten.filter(zeile => {
         const datum = formDatum(zeile.datum).toLowerCase();
         const rad = (zeile.rad || '').toLowerCase();
@@ -125,7 +138,7 @@ document.getElementById('suche').addEventListener('input', function(e) {
 
 // Event-Listener für Klicks (edit_fav & Icon-Klick bei edit-Zellen)
 document.getElementById('daten').addEventListener('click', function(e) {
-    // 1. Favorit umstellen
+
     const favZelle = e.target.closest('.fav-zelle');
     if (favZelle) {
         const activityId = Number(favZelle.dataset.id);
@@ -140,7 +153,6 @@ document.getElementById('daten').addEventListener('click', function(e) {
         return;
     }
 
-    // 2. Klick DIREKT auf das Edit-Icon
     if (e.target.classList.contains('icon-edit')) {
         const editZelle = e.target.closest('.edit-zelle');
         if (!editZelle) return;
@@ -158,7 +170,7 @@ document.getElementById('daten').addEventListener('click', function(e) {
   ================================================================================= 
 */
 
-// Hilfsvariable zum Speichern des Werts vor der Bearbeitung
+// Hilfsvariable zum Speichern des Werts vor Bearbeitung
 let alterZellenWert = '';
 
 // Speicherung Ursprungswert vor Editieren + Cursor ans Ende setzen
@@ -168,7 +180,6 @@ document.getElementById('daten').addEventListener('focusin', function(e) {
     const textSpan = e.target.querySelector('.edit-text');
     alterZellenWert = textSpan ? textSpan.textContent : e.target.textContent;
 
-    // Cursor ans Ende des Textes setzen
     setTimeout(() => {
         const zielKnoten = textSpan || e.target;
         const range = document.createRange();
@@ -180,7 +191,7 @@ document.getElementById('daten').addEventListener('focusin', function(e) {
     }, 0);
 });
 
-// Tastatur-Steuerung Enter (Speichern) / Esc (Abbruch)
+// Tastatur-Steuerung Enter/Esc (Speichern/Abbruch)
 document.getElementById('daten').addEventListener('keydown', function(e) {
     if (!e.target.classList.contains('edit-zelle')) return;
 
@@ -210,9 +221,12 @@ document.getElementById('daten').addEventListener('focusout', function(e) {
     const textSpan = editZelle.querySelector('.edit-text');
     const neuerWert = (textSpan ? textSpan.textContent : editZelle.textContent).trim();
     
-    // Zelle sperren & HTML-Struktur zurücksetzen
     editZelle.setAttribute('contenteditable', 'false');
     editZelle.innerHTML = `<span class="edit-text">${neuerWert}</span><span class="icon-edit">»</span>`;
+
+    if (spalte === 'rad') {
+        editZelle.className = `spalte-align-left edit-zelle ${getRadKlasse(neuerWert)}`;
+    }
 
     update_dbFeld(activityId, spalte, neuerWert);
 });
