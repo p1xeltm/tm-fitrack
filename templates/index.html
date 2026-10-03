@@ -8,32 +8,40 @@
 </head>
 <body>
 
-    <header class="header-balken">
-        <div class="header-inhalt">
-            <img src="{{ url_for('static', filename='favicon.svg') }}" alt="Logo" class="header-icon">
-            <span class="header-titel">tm-fitrack</span>
+    <header class="banner-balken">
+        <div class="banner-inhalt">
+            <img src="{{ url_for('static', filename='favicon.svg') }}" alt="Logo" class="banner-icon">
+            <span class="banner-titel">tm-fitrack</span>
         </div>
+
+        <a href="https://github.com/p1xeltm/tm-fitrack" target="_blank" rel="noopener noreferrer" class="banner-version">v0.3.7</a>
     </header>
 
     <main class="hauptinhalt">
-        <table class="tabelle">
-            <thead>
-                <tr>
-                    <th class="spalte-align-left">Datum</th>
-                    <th class="spalte-align-left">Startzeit</th>
-                    <th class="spalte-align-left">Rad</th>
-                    <th class="spalte-align-left">Titel</th>
-                    <th class="spalte-align-right">Distanz</th>
-                    <th class="spalte-align-right">Anstieg</th>
-                    <th class="spalte-align-right">Zeit</th>
-                    <th class="spalte-align-right">avg</th>
-                    <th class="spalte-align-right">fav</th>
-                </tr>
-            </thead>
-            <tbody id="daten">
-                <tr><td colspan="9">Lade Daten...</td></tr>
-            </tbody>
-        </table>
+        <div class="container-tabelle">
+            <div class="header-bereich">
+                <input type="text" id="suche" placeholder="> ..." class="such-feld">
+            </div>
+
+            <table class="tabelle">
+                <thead>
+                    <tr>
+                        <th class="spalte-align-left spalte-datum">Datum</th>
+                        <th class="spalte-align-left spalte-startzeit">Startzeit</th>
+                        <th class="spalte-align-left spalte-rad">Rad</th>
+                        <th class="spalte-align-left spalte-titel">Titel</th>
+                        <th class="spalte-align-right spalte-distanz">Distanz</th>
+                        <th class="spalte-align-right spalte-anstieg">Anstieg</th>
+                        <th class="spalte-align-right spalte-zeit">Zeit</th>
+                        <th class="spalte-align-right spalte-avg">avg</th>
+                        <th class="spalte-align-right spalte-fav">★</th>
+                    </tr>
+                </thead>
+                <tbody id="daten">
+                    <tr><td colspan="9">Abruf Daten...</td></tr>
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>

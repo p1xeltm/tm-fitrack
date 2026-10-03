@@ -1,0 +1,19 @@
+sudo apt install python3-full sqlite3
+pip3 install fitparse --break-system-packages
+pip3 install flask --break-system-packages
+
+
+-----------------------------------------------------------------------
+Grundfunktionen für v1.0
+-----------------------------------------------------------------------
+./ Einbettung OpenStreetMap, inklusive Höhenschummerung
+
+-----------------------------------------------------------------------
+Issues
+-----------------------------------------------------------------------
+zentrale Farbpalette
+#rad mit farblichen Bubbles/Pillen-Formen anstatt Text #exceed/#terra
+Einbettung Höhenprofil (zunächst als Platzhalter)
+(Funktion) Ändern der Trackfarbe, inkl. Transparenz+Farbe
+(Funktion) Mehrfachauswahl von Touren
+(Funktion) Export to .gpx

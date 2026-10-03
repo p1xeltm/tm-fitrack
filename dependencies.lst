@@ -1,3 +1,0 @@
-sudo apt install python3-full sqlite3
-pip3 install fitparse --break-system-packages
-pip3 install flask --break-system-packages
