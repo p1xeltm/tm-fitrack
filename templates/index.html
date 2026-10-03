@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>tm-fitrack</title>
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -14,33 +16,40 @@
             <span class="banner-titel">tm-fitrack</span>
         </div>
 
-        <a href="https://github.com/p1xeltm/tm-fitrack" target="_blank" rel="noopener noreferrer" class="banner-version">v0.4.0</a>
+        <a href="https://github.com/p1xeltm/tm-fitrack" target="_blank" rel="noopener noreferrer" class="banner-version">v0.4.70</a>
     </header>
 
     <main class="hauptinhalt">
-        <div class="container-tabelle">
-            <div class="header-bereich">
-                <input type="text" id="suche" placeholder="> ..." class="suche-box">
+        <div class="dashboard-layout">
+            
+            <div class="container-tabelle">
+                <div class="header-bereich">
+                    <input type="text" id="suche" placeholder="> ..." class="suche-box">
+                </div>
+
+                <table class="tabelle">
+                    <thead>
+                        <tr>
+                            <th class="spalte-align-left spalte-datum"><span class="datum-text">tag</span></th>
+                            <th class="spalte-align-left spalte-rad">○</th>
+                            <th class="spalte-align-left spalte-titel">txt</th>
+                            <th class="spalte-align-right spalte-distanz">km</th>
+                            <th class="spalte-align-right spalte-anstieg">hm</th>
+                            <th class="spalte-align-right spalte-zeit">h:mm:ss</th>
+                            <th class="spalte-align-right spalte-avg">avg</th>
+                            <th class="spalte-align-right spalte-fav">★</th>
+                        </tr>
+                    </thead>
+                    <tbody id="daten">
+                        <tr><td colspan="8">Abruf Daten...</td></tr>
+                    </tbody>
+                </table>
             </div>
 
-            <table class="tabelle">
-                <thead>
-                    <tr>
-                        <th class="spalte-align-left spalte-datum">Datum</th>
-                        <th class="spalte-align-left spalte-startzeit">Startzeit</th>
-                        <th class="spalte-align-left spalte-rad">Rad</th>
-                        <th class="spalte-align-left spalte-titel">Titel</th>
-                        <th class="spalte-align-right spalte-distanz">Distanz</th>
-                        <th class="spalte-align-right spalte-anstieg">Anstieg</th>
-                        <th class="spalte-align-right spalte-zeit">Zeit</th>
-                        <th class="spalte-align-right spalte-avg">avg</th>
-                        <th class="spalte-align-right spalte-fav">★</th>
-                    </tr>
-                </thead>
-                <tbody id="daten">
-                    <tr><td colspan="9">Abruf Daten...</td></tr>
-                </tbody>
-            </table>
+            <div class="container-karte">
+                <div id="map" class="karte-frame"></div>
+            </div>
+
         </div>
     </main>
 

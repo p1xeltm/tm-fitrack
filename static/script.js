@@ -1,6 +1,6 @@
-// Globale Variable für geladenen Aktivitäten
+// Globale Variable für geladenen Aktivitäten und die Leaflet-Karte
 let alleAktivitaeten = [];
-
+let map = null;
 
 
 /*
@@ -9,22 +9,43 @@ let alleAktivitaeten = [];
   ================================================================================= 
 */
 
-// Funktion: Umwandlung Datum YYYY-MM-DD >> DD.MM.YYYY
-function formDatum(str) {
+// Funktion: Initialisierung Leaflet-Karte
+function initKarte() {
+    const mapElement = document.getElementById('map');
+    if (!mapElement) return;
+
+    map = L.map('map', {
+        zoomControl: false,
+        attributionControl: false
+    }).setView([48.5328, 9.3170], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19
+    }).addTo(map);
+}
+
+// Funktion: Umwandlung Datum YYYY-MM-DD >> MON dd
+function formatDatum(str) {
     if (!str) return '';
     const teile = str.split('-');
     if (teile.length !== 3) return str;
-    return `${teile[2]}.${teile[1]}.${teile[0]}`;
+
+    const monate = ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun','Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+    const monatIndex = parseInt(teile[1], 10) - 1;
+    const monatStr = monate[monatIndex] || teile[1];
+    const tagStr = teile[2];
+
+    return `${monatStr} ${tagStr}`;
 }
 
 // Funktion: Umwandlung Punkt<>Komma + 2 Nachkommastellen
-function formZahl(wert) {
+function formatZahl(wert, stellen = 2) {
     if (wert === null || wert === undefined || wert === '') return '';
-    return Number(wert).toFixed(2).replace('.', ',');
+    return Number(wert).toFixed(stellen).replace('.', ',');
 }
 
 // Funktion: Umwandlung Sekunden in h:mm:ss
-function formZeit(sekunden) {
+function formatZeit(sekunden) {
     if (!sekunden) return '';
     const h = Math.floor(sekunden / 3600);
     const m = Math.floor((sekunden % 3600) / 60);
@@ -70,13 +91,13 @@ async function update_dbFeld(activityId, spalte, wert) {
     }
 }
 
-// Funktion: Renderung von gefilterten Tabellenzeilen
+// Funktion: Renderung von Tabellenzeilen
 function rendereTabelle(liste) {
     const ziel = document.getElementById('daten');
     ziel.innerHTML = '';
 
     if (liste.length === 0) {
-        ziel.innerHTML = '<tr><td colspan="9">Keine Treffer gefunden.</td></tr>';
+        ziel.innerHTML = '<tr><td colspan="8">Keine Treffer gefunden.</td></tr>';
         return;
     }
 
@@ -84,16 +105,18 @@ function rendereTabelle(liste) {
         const tr = document.createElement('tr');
         const istFav = Boolean(zeile.fav);
         const radKlasse = getRadKlasse(zeile.rad);
+        const radSymbol = zeile.rad ? '◉' : '';
         
         tr.innerHTML = `
-            <td class="spalte-align-left">${formDatum(zeile.datum)}</td>
-            <td class="spalte-align-left">${zeile.startzeit || ''}</td>
-            <td class="spalte-align-left edit-zelle ${radKlasse}" data-id="${zeile.id}" data-spalte="rad" contenteditable="false" spellcheck="false"><span class="edit-text">${zeile.rad || ''}</span><span class="icon-edit">»</span></td>
+            <td class="spalte-align-left spalte-datum">
+                <span class="datum-text">${formatDatum(zeile.datum)}</span>
+            </td>
+            <td class="spalte-align-center rad-zelle ${radKlasse}" data-id="${zeile.id}" title="${zeile.rad || ''}">${radSymbol}</td>
             <td class="spalte-align-left edit-zelle" data-id="${zeile.id}" data-spalte="titel" contenteditable="false" spellcheck="false"><span class="edit-text">${zeile.titel || ''}</span><span class="icon-edit">»</span></td>
-            <td class="spalte-align-right">${formZahl(zeile.distanz)}</td>
+            <td class="spalte-align-right">${formatZahl(zeile.distanz)}</td>
             <td class="spalte-align-right">${zeile.anstieg ?? ''}</td>
-            <td class="spalte-align-right">${formZeit(zeile.zeit)}</td>
-            <td class="spalte-align-right">${formZahl(zeile.avg)}</td>
+            <td class="spalte-align-right">${formatZeit(zeile.zeit)}</td>
+            <td class="spalte-align-right">${formatZahl(zeile.avg, 1)}</td>
             <td class="spalte-align-right fav-zelle ${istFav ? 'ist-favorit' : ''}" data-id="${zeile.id}">
                 ${istFav ? '★' : ''}
             </td>
@@ -103,63 +126,67 @@ function rendereTabelle(liste) {
 }
 
 
-// Abruf der Daten von API
-fetch('/api/activities')
-    .then(antwort => antwort.json())
-    .then(liste => {
-        alleAktivitaeten = liste;
-        rendereTabelle(alleAktivitaeten);
-    });
-
-
 
 /*
   =================================================================================
-    EVENT-LISTENER
+    INITIALISIERUNG & ABFRAGEN
   ================================================================================= 
 */
 
-// Event-Listener für Suchfeld
-document.getElementById('suche').addEventListener('input', function(e) {
+document.addEventListener('DOMContentLoaded', () => {
     
-    const begriff = e.target.value.toLowerCase().trim();
-    const gefiltert = alleAktivitaeten.filter(zeile => {
-        const datum = formDatum(zeile.datum).toLowerCase();
-        const rad = (zeile.rad || '').toLowerCase();
-        const titel = (zeile.titel || '').toLowerCase();
+    initKarte();
 
-        return datum.includes(begriff) || 
-               rad.includes(begriff) || 
-               titel.includes(begriff);
+    // Abruf der Daten von API
+    fetch('/api/activities')
+        .then(antwort => antwort.json())
+        .then(liste => {
+            alleAktivitaeten = liste;
+            rendereTabelle(alleAktivitaeten);
+        })
+        .catch(err => console.error('Fehler beim Laden der Aktivitäten:', err));
+
+    // Event-Listener für Suchfeld
+    document.getElementById('suche').addEventListener('input', function(e) {
+        const begriff = e.target.value.toLowerCase().trim();
+        const gefiltert = alleAktivitaeten.filter(zeile => {
+            const datum = formatDatum(zeile.datum).toLowerCase();
+            const rad = (zeile.rad || '').toLowerCase();
+            const titel = (zeile.titel || '').toLowerCase();
+
+            return datum.includes(begriff) || 
+                   rad.includes(begriff) || 
+                   titel.includes(begriff);
+        });
+
+        rendereTabelle(gefiltert);
     });
 
-    rendereTabelle(gefiltert);
-});
+    // Event-Listener für Klicks (edit_fav & Icon-Klick bei edit-Zellen)
+    document.getElementById('daten').addEventListener('click', function(e) {
+        const favZelle = e.target.closest('.fav-zelle');
+        if (favZelle) {
+            const activityId = Number(favZelle.dataset.id);
+            const aktivitaet = alleAktivitaeten.find(a => a.id === activityId);
+            if (!aktivitaet) return;
 
-// Event-Listener für Klicks (edit_fav & Icon-Klick bei edit-Zellen)
-document.getElementById('daten').addEventListener('click', function(e) {
+            const neuerStatus = aktivitaet.fav ? 0 : 1;
+            favZelle.classList.toggle('ist-favorit', neuerStatus === 1);
+            favZelle.textContent = neuerStatus === 1 ? '★' : '';
 
-    const favZelle = e.target.closest('.fav-zelle');
-    if (favZelle) {
-        const activityId = Number(favZelle.dataset.id);
-        const aktivitaet = alleAktivitaeten.find(a => a.id === activityId);
-        if (!aktivitaet) return;
+            update_dbFeld(activityId, 'fav', neuerStatus);
+            return;
+        }
 
-        const neuerStatus = aktivitaet.fav ? 0 : 1;
-        favZelle.classList.toggle('ist-favorit', neuerStatus === 1);
-        favZelle.textContent = neuerStatus === 1 ? '★' : '';
+        if (e.target.classList.contains('icon-edit')) {
+            const editZelle = e.target.closest('.edit-zelle');
+            if (!editZelle) return;
 
-        update_dbFeld(activityId, 'fav', neuerStatus);
-        return;
-    }
+            editZelle.setAttribute('contenteditable', 'true');
+            editZelle.focus();
+        }
+    });
 
-    if (e.target.classList.contains('icon-edit')) {
-        const editZelle = e.target.closest('.edit-zelle');
-        if (!editZelle) return;
-
-        editZelle.setAttribute('contenteditable', 'true');
-        editZelle.focus();
-    }
 });
 
 
@@ -170,7 +197,6 @@ document.getElementById('daten').addEventListener('click', function(e) {
   ================================================================================= 
 */
 
-// Hilfsvariable zum Speichern des Werts vor Bearbeitung
 let alterZellenWert = '';
 
 // Speicherung Ursprungswert vor Editieren + Cursor ans Ende setzen

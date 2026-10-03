@@ -13,6 +13,7 @@
     --col-grau95:   hsl(0, 0%, 95%);
     --col-grau85:   hsl(0, 0%, 85%);
     --col-grau75:   hsl(0, 0%, 75%);
+    --col-grau60:   hsl(0, 0%, 60%);
     --col-schwarz:  hsl(0, 0%, 10%);
 
     --col-exceed:   hsl(25, 100%, 50%);
@@ -25,7 +26,7 @@
 
 /*
   -----------------------------------------------------------------------
-    Grundgerüst
+    Grundgerüst & LAYOUT
   -----------------------------------------------------------------------
 */
 
@@ -40,10 +41,33 @@ body {
     padding: 20px;
 }
 
-.container-tabelle {
-    width: 85%;
+.dashboard-layout {
+    display: flex;
+    gap: 5px;
+    width: 100%;
+    align-items: flex-start;
 }
 
+.container-tabelle {
+    width: 55%;
+}
+
+.container-karte {
+    flex: 1;
+    margin-top: 30px;
+}
+
+.karte-frame {
+    width: 100%;
+    height: 500px;
+    background-color: var(--col-grau95);
+    border: 15px solid var(--col-grau95);
+    border-right: 5px solid var(--col-grau95);
+    border-radius: 30px;
+    box-sizing: border-box;
+    display: block;
+    overflow: hidden;
+}
 
 
 /*
@@ -108,7 +132,7 @@ body {
     background-color: var(--col-weiss);
     padding: 4px 14px;
     font-size: 0.9rem;
-    border: 1px solid var(--col-grau85);
+    border: 0px solid var(--col-grau85);
     border-radius: 17px;
     outline: none;
     width: 200px;
@@ -129,16 +153,19 @@ body {
 
 .tabelle {
     width: 100%;
+    font-family: inherit;
     border-collapse: separate;
     border-spacing: 0;
     table-layout: fixed;
     background-color: var(--col-weiss);
     border: 15px solid var(--col-weiss);
     border-radius: 15px;
+    box-sizing: border-box;
     overflow: hidden;
 }
 
 .tabelle th, .tabelle td {
+    font-family: inherit;
     border-bottom: 1px solid var(--col-grau85);
     padding: 6px 10px;
     box-sizing: border-box;
@@ -156,18 +183,26 @@ body {
     background-color: var(--col-grau95);
 }
 
-.spalte-align-left { text-align: left; }
-.spalte-align-right { text-align: right; }
+.spalte-align-left   { text-align: left; }
+.spalte-align-center { text-align: center; }
+.spalte-align-right  { text-align: right; }
 
-.spalte-datum     { width: 9%; }
-.spalte-startzeit { width: 9%; }
-.spalte-rad       { width: 8%; }
+.spalte-datum     { width: 7%; }
+.spalte-rad       { width: 3%;  }
 .spalte-distanz   { width: 9%; }
-.spalte-anstieg   { width: 8%; }
-.spalte-zeit      { width: 8%; }
-.spalte-avg       { width: 7%; }
-.spalte-fav       { width: 3%; }
+.spalte-anstieg   { width: 9%; }
+.spalte-zeit      { width: 12%; }
+.spalte-avg       { width: 9%;  }
+.spalte-fav       { width: 4%;  }
 .spalte-titel     { width: auto; }
+
+.datum-text {
+    display: inline-block;
+    transform: scale(0.85);
+    transform-origin: left center;
+    color: var(--col-grau60) !important;
+    font-weight: normal;
+}
 
 
 
@@ -180,7 +215,7 @@ body {
 .fav-zelle {
     cursor: pointer;
     user-select: none;
-    color: var(--col-akzent1);
+    color: var(--col-main2);
 }
 .fav-zelle:not(.ist-favorit):hover::before {
     content: '★';
@@ -221,7 +256,7 @@ body {
 
 .edit-zelle:focus {
     cursor: text;
-    outline: 1px solid var(--col-akzent1);
+    outline: 1px solid var(--col-main2);
 }
 
 

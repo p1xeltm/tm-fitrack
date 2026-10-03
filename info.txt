@@ -4,14 +4,22 @@ pip3 install flask --break-system-packages
 
 
 -----------------------------------------------------------------------
-Grundversion für v1.0
+Grundcode für v1.0.00
 -----------------------------------------------------------------------
-Einbettung OpenStreetMap, inklusive Höhenschummerung
-?? wenn script.js zu groß --> Aufteilen Auslagern von Funktinen oder Teilen?
+v0.5.12
+    Höhenschummerung in OSM-Karte
+v0.7.21
+    Überarbeitung edit-Funktionen (Position von »)
+v0.8.00
+    Einbettung Platzhalter für Höhenprofil
+    dynamische Größenänderung durch Anfasser im Fadenkreuz
+v0.9.91
+    Laden der .fit-Tracks auf OSM-Karte
+
 -----------------------------------------------------------------------
 Issues
 -----------------------------------------------------------------------
-Einbettung Höhenprofil (zunächst als Platzhalter)
 (Funktion) Ändern der Trackfarbe, inkl. Transparenz+Farbe
-(Funktion) Mehrfachauswahl von Touren
+(Funktion) Mehrfachauswahl/Mehrfachanzeige von Touren
 (Funktion) Export to .gpx
+(optional) Umbau Dateistruktur auf Wurzelverzeichnis (ohne template/ und static/)
