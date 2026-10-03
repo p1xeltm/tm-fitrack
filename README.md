@@ -1,1 +1,1 @@
-# ![Logo](static/favicon.svg) tm-fitrack
+![Logo](static/favicon.svg) **tm-fitrack**
