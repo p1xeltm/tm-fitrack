@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>tm-fitrack</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header class="header-balken">
+        <div class="header-inhalt">
+            <img src="{{ url_for('static', filename='favicon.svg') }}" alt="Logo" class="header-icon">
+            <span class="header-titel">tm-fitrack</span>
+        </div>
+    </header>
+
+    <main class="hauptinhalt">
+        <table class="tabelle">
+            <thead>
+                <tr>
+                    <th class="spalte-align-left">Datum</th>
+                    <th class="spalte-align-left">Startzeit</th>
+                    <th class="spalte-align-left">Rad</th>
+                    <th class="spalte-align-left">Titel</th>
+                    <th class="spalte-align-right">Distanz</th>
+                    <th class="spalte-align-right">Anstieg</th>
+                    <th class="spalte-align-right">Zeit</th>
+                    <th class="spalte-align-right">avg</th>
+                    <th class="spalte-align-right">fav</th>
+                </tr>
+            </thead>
+            <tbody id="daten">
+                <tr><td colspan="9">Lade Daten...</td></tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
