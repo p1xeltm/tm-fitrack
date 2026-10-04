@@ -11,10 +11,10 @@ let map = null;
 
 // Funktion: Initialisierung Leaflet-Karte
 function initKarte() {
-    const mapElement = document.getElementById('map');
+    const mapElement = document.getElementById('osmkarte');
     if (!mapElement) return;
 
-    map = L.map('map', {
+    map = L.map('osmkarte', {
         zoomControl: false,
         attributionControl: false
     }).setView([48.5328, 9.3170], 13);

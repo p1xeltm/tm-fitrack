@@ -16,38 +16,43 @@
             <span class="banner-titel">tm-fitrack</span>
         </div>
 
-        <a href="https://github.com/p1xeltm/tm-fitrack" target="_blank" rel="noopener noreferrer" class="banner-version">v0.4.70</a>
+        <a href="https://github.com/p1xeltm/tm-fitrack" target="_blank" rel="noopener noreferrer" class="banner-version">v0.5.12</a>
     </header>
 
     <main class="hauptinhalt">
-        <div class="dashboard-layout">
+        <div class="header-bereich">
+            <input type="text" id="suche" placeholder="> ..." class="suche-box">
+        </div>
+
+        <div class="spaltenlayout">
             
             <div class="container-tabelle">
-                <div class="header-bereich">
-                    <input type="text" id="suche" placeholder="> ..." class="suche-box">
+                <div class="tabelle-wrapper">
+                    <table class="tabelle">
+                        <thead>
+                            <tr>
+                                <th class="spalte-align-left spalte-datum"><span class="datum-text">tag</span></th>
+                                <th class="spalte-align-left spalte-rad">○</th>
+                                <th class="spalte-align-left spalte-titel">txt</th>
+                                <th class="spalte-align-right spalte-distanz">km</th>
+                                <th class="spalte-align-right spalte-anstieg">hm</th>
+                                <th class="spalte-align-right spalte-zeit">h:mm:ss</th>
+                                <th class="spalte-align-right spalte-avg">avg</th>
+                                <th class="spalte-align-right spalte-fav">★</th>
+                            </tr>
+                        </thead>
+                        <tbody id="daten">
+                            <tr><td colspan="8">Abruf Daten...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-
-                <table class="tabelle">
-                    <thead>
-                        <tr>
-                            <th class="spalte-align-left spalte-datum"><span class="datum-text">tag</span></th>
-                            <th class="spalte-align-left spalte-rad">○</th>
-                            <th class="spalte-align-left spalte-titel">txt</th>
-                            <th class="spalte-align-right spalte-distanz">km</th>
-                            <th class="spalte-align-right spalte-anstieg">hm</th>
-                            <th class="spalte-align-right spalte-zeit">h:mm:ss</th>
-                            <th class="spalte-align-right spalte-avg">avg</th>
-                            <th class="spalte-align-right spalte-fav">★</th>
-                        </tr>
-                    </thead>
-                    <tbody id="daten">
-                        <tr><td colspan="8">Abruf Daten...</td></tr>
-                    </tbody>
-                </table>
             </div>
 
-            <div class="container-karte">
-                <div id="map" class="karte-frame"></div>
+            <div class="container-rechts">
+                <div id="osmkarte" class="container-osmkarte"></div>
+                <div id="hoehenprofil" class="container-hoehenprofil">
+                    <span class="platzhalter-text">Höhenprofil Platzhalter</span>
+                </div>
             </div>
 
         </div>

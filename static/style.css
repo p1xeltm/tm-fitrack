@@ -26,48 +26,85 @@
 
 /*
   -----------------------------------------------------------------------
-    Grundgerüst & LAYOUT
+    GRUNDGERÜST & LAYOUT
   -----------------------------------------------------------------------
 */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
 
 body {
     font-family: sans-serif;
     background-color: var(--col-grau95);
-    margin: 0;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .hauptinhalt {
     padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-.dashboard-layout {
+.spaltenlayout {
     display: flex;
-    gap: 5px;
+    gap: 10px;
     width: 100%;
-    align-items: flex-start;
+    flex: 1;
+    align-items: stretch;
+    overflow: hidden;
 }
 
 .container-tabelle {
     width: 55%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-.container-karte {
+
+/*
+  -----------------------------------------------------------------------
+    RECHTER BEREICH (OSM-Karte & Höhenprofil)
+  -----------------------------------------------------------------------
+*/
+
+.container-rechts {
     flex: 1;
-    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    gap: 10px;
 }
 
-.karte-frame {
+.container-osmkarte {
     width: 100%;
-    height: 500px;
+    height: 60%;
     background-color: var(--col-grau95);
-    border: 15px solid var(--col-grau95);
-    border-right: 5px solid var(--col-grau95);
-    border-radius: 30px;
     box-sizing: border-box;
     display: block;
     overflow: hidden;
 }
+
+.container-hoehenprofil {
+    width: 100%;
+    flex: 1;
+    background-color: var(--col-grau85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
 
 
 /*
@@ -122,8 +159,9 @@ body {
 
 .header-bereich {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     margin-bottom: 12px;
+    width: 100%;
 }
 
 .suche-box {
@@ -133,7 +171,6 @@ body {
     padding: 4px 14px;
     font-size: 0.9rem;
     border: 0px solid var(--col-grau85);
-    border-radius: 17px;
     outline: none;
     width: 200px;
     box-sizing: border-box;
@@ -147,9 +184,21 @@ body {
 
 /*
   -----------------------------------------------------------------------
-    TABELLE
+    TABELLE (Scrollbar & Fixierter Kopf)
   -----------------------------------------------------------------------
 */
+
+.tabelle-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    background-color: var(--col-weiss);
+    border: 15px solid var(--col-weiss);
+    box-sizing: border-box;
+
+    /* Optionales Stylen der Scrollbar (modern) */
+    scrollbar-width: thin;
+    scrollbar-color: var(--col-grau75) var(--col-weiss);
+}
 
 .tabelle {
     width: 100%;
@@ -158,10 +207,7 @@ body {
     border-spacing: 0;
     table-layout: fixed;
     background-color: var(--col-weiss);
-    border: 15px solid var(--col-weiss);
-    border-radius: 15px;
     box-sizing: border-box;
-    overflow: hidden;
 }
 
 .tabelle th, .tabelle td {
@@ -177,6 +223,10 @@ body {
 .tabelle th {
     color: var(--col-main2);
     border-bottom: 2px solid var(--col-main2);
+    position: sticky;
+    top: 0;
+    background-color: var(--col-weiss);
+    z-index: 10;
 }
 
 .tabelle tbody tr:hover {
