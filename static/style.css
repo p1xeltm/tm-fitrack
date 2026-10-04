@@ -22,6 +22,12 @@
     --col-slx99:    hsl(190, 80%, 30%);
 }
 
+    /* Rad-Klassen u Farben */
+    .rad-exceed { color: var(--col-exceed); }
+    .rad-terra  { color: var(--col-terra);  }
+    .rad-c62o   { color: var(--col-c62o);   }
+    .rad-slx99  { color: var(--col-slx99);  }
+
 
 
 /*
@@ -159,20 +165,23 @@ body {
 
 .header-bereich {
     display: flex;
-    justify-content: flex-start;
-    margin-bottom: 12px;
-    width: 100%;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    width: 55%;
+    height: 26px;
+    box-sizing: border-box;
 }
 
 .suche-box {
     appearance: none;
     -webkit-appearance: none;
     background-color: var(--col-weiss);
-    padding: 4px 14px;
-    font-size: 0.9rem;
+    padding: 0 10px;
+    font-size: 0.85rem;
     border: 0px solid var(--col-grau85);
     outline: none;
     width: 200px;
+    height: 100%;
     box-sizing: border-box;
 }
 
@@ -184,7 +193,7 @@ body {
 
 /*
   -----------------------------------------------------------------------
-    TABELLE (Scrollbar & Fixierter Kopf)
+    TABELLE
   -----------------------------------------------------------------------
 */
 
@@ -194,10 +203,6 @@ body {
     background-color: var(--col-weiss);
     border: 15px solid var(--col-weiss);
     box-sizing: border-box;
-
-    /* Optionales Stylen der Scrollbar (modern) */
-    scrollbar-width: thin;
-    scrollbar-color: var(--col-grau75) var(--col-weiss);
 }
 
 .tabelle {
@@ -240,10 +245,10 @@ body {
 .spalte-datum     { width: 7%; }
 .spalte-rad       { width: 3%;  }
 .spalte-distanz   { width: 9%; }
-.spalte-anstieg   { width: 9%; }
-.spalte-zeit      { width: 12%; }
-.spalte-avg       { width: 9%;  }
-.spalte-fav       { width: 4%;  }
+.spalte-anstieg   { width: 7%; }
+.spalte-zeit      { width: 11%; }
+.spalte-avg       { width: 7%;  }
+.spalte-fav       { width: 2.7%;  }
 .spalte-titel     { width: auto; }
 
 .datum-text {
@@ -275,7 +280,7 @@ body {
 
 /*
   -----------------------------------------------------------------------
-    EDIT_FELD (rad, titel)
+    EDIT_RAD und EDIT_TITEL
   -----------------------------------------------------------------------
 */
 
@@ -308,16 +313,3 @@ body {
     cursor: text;
     outline: 1px solid var(--col-main2);
 }
-
-
-
-/*
-  -----------------------------------------------------------------------
-    RAD FARB-KLASSEN
-  -----------------------------------------------------------------------
-*/
-
-.rad-exceed { color: var(--col-exceed); }
-.rad-terra  { color: var(--col-terra);  }
-.rad-c62o   { color: var(--col-c62o);   }
-.rad-slx99  { color: var(--col-slx99);  }

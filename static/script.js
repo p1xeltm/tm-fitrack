@@ -126,6 +126,19 @@ function rendereTabelle(liste) {
 }
 
 
+// Funktion: Abbruch via Esc in Datenfeld oder Suchfeld
+function abbrechen(element, zielWert) {
+    if (element.id === 'suche') {
+        element.value = zielWert;
+        rendereTabelle(alleAktivitaeten);
+    } else {
+        const textSpan = element.querySelector('.edit-text');
+        (textSpan || element).textContent = zielWert;
+    }
+    element.blur();
+}
+
+
 
 /*
   =================================================================================
@@ -160,6 +173,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         rendereTabelle(gefiltert);
+    });
+
+    // Zentrale Tastatur-Event-Steuerung
+    document.addEventListener('keydown', (e) => {
+        const el = e.target;
+        const istSuche = el.id === 'suche';
+        const istEdit = el.classList?.contains('edit-zelle');
+
+        if (!istSuche && !istEdit) return;
+
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            el.blur();
+        } else if (e.key === 'Escape') {
+            abbrechen(el, istSuche ? '' : alterZellenWert);
+        }
     });
 
     // Event-Listener für Klicks (edit_fav & Icon-Klick bei edit-Zellen)
@@ -199,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let alterZellenWert = '';
 
-// Speicherung Ursprungswert vor Editieren + Cursor ans Ende setzen
+// Speicherung Ursprungswert vor Editieren + Cursor an Ende setzen
 document.getElementById('daten').addEventListener('focusin', function(e) {
     if (!e.target.classList.contains('edit-zelle')) return;
 
@@ -215,25 +244,6 @@ document.getElementById('daten').addEventListener('focusin', function(e) {
         sel.removeAllRanges();
         sel.addRange(range);
     }, 0);
-});
-
-// Tastatur-Steuerung Enter/Esc (Speichern/Abbruch)
-document.getElementById('daten').addEventListener('keydown', function(e) {
-    if (!e.target.classList.contains('edit-zelle')) return;
-
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        e.target.blur();
-    } 
-    else if (e.key === 'Escape') {
-        const textSpan = e.target.querySelector('.edit-text');
-        if (textSpan) {
-            textSpan.textContent = alterZellenWert;
-        } else {
-            e.target.textContent = alterZellenWert;
-        }
-        e.target.blur();
-    }
 });
 
 // Speichern beim Verlassen eines Feldes
