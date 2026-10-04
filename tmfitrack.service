@@ -2,8 +2,8 @@
 Description=tmfitrack Flask Server
 
 [Service]
-WorkingDirectory=/home/tm/Laufwerk-T/Projektdaten GitHub/tmfitrack
-ExecStart=/usr/bin/python3 "/home/tm/Laufwerk-T/Projektdaten GitHub/tmfitrack/server.py"
+WorkingDirectory=/home/tm/Laufwerk-T/git p1xeltm/tmfitrack
+ExecStart=/usr/bin/python3 "/home/tm/Laufwerk-T/git p1xeltm/tmfitrack/server.py"
 Restart=on-failure
 
 [Install]
