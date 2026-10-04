@@ -3,6 +3,11 @@ sudo apt install python3-full sqlite3
 pip3 install fitparse --break-system-packages
 pip3 install flask --break-system-packages
 
+mkdir -p ~/.config/systemd/user/
+ln -s "xxz/tmfitrack/tmfitrack.service" ~/.config/systemd/user/tmfitrack.service
+systemctl --user daemon-reload
+systemctl --user enable --now tmfitrack
+
 
 -----------------------------------------------------------------------
 Grundcode für v1.0.00
@@ -16,6 +21,8 @@ Grundcode für v1.0.00
 Issues
 -----------------------------------------------------------------------
 (main) Suche von Datum mit .2026 oder 05.2026 möglich trotz Datumformat mmm-dd
+(main) Start-Befehl via alias/Terminal
+(main) server.py debug=False
 (layout) Höhenschummerung in OSM-Karte
 (layout) dynamische Größenänderung der Container durch Anfasser im Fadenkreuz
 (layout-min)    . mittige vertikale Position für rad-Buttons

@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>tm-fitrack</title>
+    <title>tmfitrack</title>
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
@@ -13,10 +13,10 @@
     <header class="banner-balken">
         <div class="banner-inhalt">
             <img src="{{ url_for('static', filename='favicon.svg') }}" alt="Logo" class="banner-icon">
-            <span class="banner-titel">tm-fitrack</span>
+            <span class="banner-titel">tmfitrack</span>
         </div>
 
-        <a href="https://github.com/p1xeltm/tm-fitrack" target="_blank" rel="noopener noreferrer" class="banner-version">v0.5.37</a>
+        <a href="https://github.com/p1xeltm/tmfitrack" target="_blank" rel="noopener noreferrer" class="banner-version">v0.5.71</a>
     </header>
 
     <main class="hauptinhalt">
@@ -50,9 +50,7 @@
 
             <div class="container-rechts">
                 <div id="osmkarte" class="container-osmkarte"></div>
-                <div id="hoehenprofil" class="container-hoehenprofil">
-                    <span class="platzhalter-text">Höhenprofil Platzhalter</span>
-                </div>
+                <div id="hoehenprofil" class="container-hoehenprofil"><span>Höhenprofil</span></div>
             </div>
 
         </div>
