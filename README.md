@@ -18,9 +18,10 @@ Issues
 (main) Suche von Datum mit .2026 oder 05.2026 möglich trotz Datumformat mmm-dd
 (layout) Höhenschummerung in OSM-Karte
 (layout) dynamische Größenänderung der Container durch Anfasser im Fadenkreuz
-(layout-min)    ./ mittige vertikale Position für rad-Buttons
-                ./ git-Icon hinter Versionscode
-                ./ gap oben+unten zwischen Banner Suchfeld und Tabelle identisch
+(layout-min)    . mittige vertikale Position für rad-Buttons
+                . git-Icon hinter Versionscode
+                . gap oben+unten zwischen Banner Suchfeld und Tabelle identisch
+                . Scrollbalken nur anzeigen, wenn Cursor innerhalb von Tabelle
 (Funktion) Ändern der Trackfarbe, inkl. Transparenz+Farbe
 (Funktion) Export to .gpx
 (optional) Umbau Dateistruktur auf Wurzelverzeichnis (ohne template/ und static/)
