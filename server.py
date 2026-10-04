@@ -1,7 +1,8 @@
 from flask import Flask, render_template, jsonify, request
-import sqlite3
+import sqlite3, os
 
-DATENBANK = "fitdb.db"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATENBANK = os.path.join(BASE_DIR, "fitdb.db")
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
 @app.route("/")
