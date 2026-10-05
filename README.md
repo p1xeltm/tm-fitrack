@@ -1,8 +1,6 @@
 ```
-sudo apt install python3-full sqlite3
-pip3 install fitparse --break-system-packages
-pip3 install flask --break-system-packages
-pip3 install rdp --break-system-packages
+sudo apt install python3-full sqlite3 python3-pip
+sudo pip3 install fitparse flask rdp --break-system-packages
 
 mkdir -p ~/.config/systemd/user/
 ln -s "/home/tm/Laufwerk-T/git p1xeltm/tmfitrack/tmfitrack.service" ~/.config/systemd/user/tmfitrack.service
