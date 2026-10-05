@@ -2,6 +2,7 @@
 sudo apt install python3-full sqlite3
 pip3 install fitparse --break-system-packages
 pip3 install flask --break-system-packages
+pip3 install rdp --break-system-packages
 
 mkdir -p ~/.config/systemd/user/
 ln -s "/home/tm/Laufwerk-T/git p1xeltm/tmfitrack/tmfitrack.service" ~/.config/systemd/user/tmfitrack.service
@@ -12,14 +13,14 @@ systemctl --user enable --now tmfitrack
 -----------------------------------------------------------------------
 Grundcode für v1.0.00
 -----------------------------------------------------------------------
-**v0.7.00**
-    Überarbeitung edit-Funktionen (Position von »)
-**v0.9.00**
-    Laden der .fit-Tracks auf OSM-Karte
+Laden der .fit-Tracks auf OSM-Karte
+    Parsen aller bisherigen .fit-Dateien und Speichern des Tracks in neuer db-feld; epsilon=0.00005
+    Parsen einer .fit-Datei inklusive Schreiben in db-feld beim Import fitimport.py
 
 -----------------------------------------------------------------------
 Issues
 -----------------------------------------------------------------------
+(main) Überarbeitung edit-Funktionen (Position von »)
 (main) Suche von Datum mit .2026 oder 05.2026 möglich trotz Datumformat mmm-dd
 (main) <rename> tmfitrack.local
 (main) Ausführung von fitimport.py über Oberfläche, +Pfad für fitdb/Verzeichnis (siehe server.py)
