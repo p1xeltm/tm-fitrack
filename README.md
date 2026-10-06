@@ -20,7 +20,7 @@ Issues
 -----------------------------------------------------------------------
 (main) Überarbeitung edit-Funktionen (Position von »)
 (main) Suche von Datum mit .2026 oder 05.2026 möglich trotz Datumformat mmm-dd
-(main) <rename> tmfitrack.local
+(main) <rename?> tmfitrack.local
 (main) Ausführung von fitimport.py über Oberfläche, +Pfad für fitdb/Verzeichnis (siehe server.py)
 (main) server.py debug=False
 (layout) Höhenschummerung in OSM-Karte
